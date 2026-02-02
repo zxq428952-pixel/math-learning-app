@@ -167,7 +167,7 @@ function TheoremDemo() {
                   a² + b² = {(a * a + b * b).toFixed(2)}
                 </div>
                 <div className="font-bold text-green-600">
-                  c² = {parseFloat(c) * parseFloat(c).toFixed(2)} = {(parseFloat(c) * parseFloat(c)).toFixed(2)}
+                  c² = {parseFloat(c) * parseFloat(c)} = {(parseFloat(c) * parseFloat(c)).toFixed(2)}
                 </div>
                 <div className="border-t pt-2 text-lg font-bold text-purple-600">
                   c = √{(a * a + b * b).toFixed(2)} = {c}
@@ -299,7 +299,8 @@ function TheoremApplication() {
   const [ladderBase, setLadderBase] = useState(3);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const reachHeight = Math.sqrt(ladderHeight * ladderHeight - ladderBase * ladderBase).toFixed(2);
+  const reachHeight = Math.sqrt(ladderHeight * ladderHeight - ladderBase * ladderBase);
+  const reachHeightDisplay = reachHeight.toFixed(2);
 
   useEffect(() => {
     drawLadder();
@@ -333,7 +334,7 @@ function TheoremApplication() {
     ctx.stroke();
 
     // 绘制梯子
-    const reachY = offsetY - Math.sqrt(ladderHeight * ladderHeight - ladderBase * ladderBase) * scale;
+    const reachY = offsetY - reachHeight * scale;
     ctx.beginPath();
     ctx.moveTo(offsetX, reachY);
     ctx.lineTo(offsetX + ladderBase * scale, offsetY);
@@ -346,8 +347,8 @@ function TheoremApplication() {
     ctx.fillStyle = '#000';
     ctx.textAlign = 'center';
     ctx.fillText(`梯子长度: ${ladderHeight}m`, offsetX + ladderBase * scale / 2, offsetY + 25);
-    ctx.fillText(`底部距离: ${ladderBase}m`, offsetX + ladderBase * scale + 40, offsetY - reachHeight / 2);
-    ctx.fillText(`到达高度: ${reachHeight}m`, offsetX - 40, reachY - 10);
+    ctx.fillText(`底部距离: ${ladderBase}m`, offsetX + ladderBase * scale + 40, offsetY - reachHeight * scale / 2);
+    ctx.fillText(`到达高度: ${reachHeightDisplay}m`, offsetX - 40, reachY - 10);
   };
 
   return (
