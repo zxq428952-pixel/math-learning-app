@@ -251,6 +251,7 @@ function LearningMapCard({
     orange: 'from-orange-500 to-orange-600 border-orange-200 dark:border-orange-800 hover:shadow-orange-500/30',
     pink: 'from-pink-500 to-pink-600 border-pink-200 dark:border-pink-800 hover:shadow-pink-500/30',
     red: 'from-red-500 to-red-600 border-red-200 dark:border-red-800 hover:shadow-red-500/30',
+    indigo: 'from-indigo-500 to-indigo-600 border-indigo-200 dark:border-indigo-800 hover:shadow-indigo-500/30',
   };
 
   return (
