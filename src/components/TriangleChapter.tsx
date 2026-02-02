@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
-import { Triangle, Info, AlertCircle } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { Triangle, Info, AlertCircle, CheckCircle2, XCircle, BookOpen } from 'lucide-react';
 
 export function TriangleChapter() {
   return (
@@ -23,7 +24,7 @@ export function TriangleChapter() {
       </Card>
 
       <Tabs defaultValue="sides" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-3 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+        <TabsList className="grid w-full grid-cols-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
           <TabsTrigger 
             value="sides"
             className="data-[state=active]:bg-blue-500 data-[state=active]:text-white"
@@ -42,6 +43,12 @@ export function TriangleChapter() {
           >
             外角定理
           </TabsTrigger>
+          <TabsTrigger 
+            value="practice"
+            className="data-[state=active]:bg-blue-500 data-[state=active]:text-white"
+          >
+            练习题
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="sides">
@@ -55,6 +62,10 @@ export function TriangleChapter() {
         <TabsContent value="exterior">
           <TriangleExteriorDemo />
         </TabsContent>
+
+        <TabsContent value="practice">
+          <TrianglePractice />
+        </TabsContent>
       </Tabs>
     </div>
   );
@@ -65,11 +76,12 @@ function TriangleSidesDemo() {
   const [sideA, setSideA] = useState(150);
   const [sideB, setSideB] = useState(150);
   const [sideC, setSideC] = useState(150);
+  const [animating, setAnimating] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
   useEffect(() => {
     drawTriangle();
-  }, [sideA, sideB, sideC]);
+  }, [sideA, sideB, sideC, animating]);
 
   const drawTriangle = () => {
     const canvas = canvasRef.current;
@@ -78,32 +90,25 @@ function TriangleSidesDemo() {
     const ctx = canvas.getContext('2d');
     if (!ctx) return;
 
-    // 清除画布
     ctx.clearRect(0, 0, canvas.width, canvas.height);
 
     const centerX = canvas.width / 2;
     const centerY = canvas.height / 2;
 
-    // 使用余弦定理计算角度
     const a = sideA;
     const b = sideB;
     const c = sideC;
 
-    // 检查是否可以构成三角形
     const canForm = (a + b > c) && (b + c > a) && (a + c > b);
 
     if (canForm) {
-      // 计算第一个顶点（底部中心）
+      const angle1 = Math.acos((b * b + c * c - a * a) / (2 * b * c));
+      const scale = 0.8;
       const x1 = centerX;
       const y1 = centerY + 100;
-
-      // 计算第二个顶点
-      const angle1 = Math.acos((b * b + c * c - a * a) / (2 * b * c));
-      const x2 = centerX + b * Math.cos(angle1);
-      const y2 = centerY + 100 - b * Math.sin(angle1);
-
-      // 计算第三个顶点
-      const x3 = centerX + c;
+      const x2 = centerX + b * scale * Math.cos(angle1);
+      const y2 = centerY + 100 - b * scale * Math.sin(angle1);
+      const x3 = centerX + c * scale;
       const y3 = centerY + 100;
 
       // 绘制三角形
@@ -113,11 +118,9 @@ function TriangleSidesDemo() {
       ctx.lineTo(x3, y3);
       ctx.closePath();
 
-      // 填充颜色
       ctx.fillStyle = 'rgba(59, 130, 246, 0.2)';
       ctx.fill();
 
-      // 绘制边框
       ctx.strokeStyle = '#3B82F6';
       ctx.lineWidth = 3;
       ctx.stroke();
@@ -129,7 +132,6 @@ function TriangleSidesDemo() {
       ctx.fillText(`b = ${b}`, (x1 + x2) / 2 - 20, (y1 + y2) / 2 - 10);
       ctx.fillText(`c = ${c}`, (x1 + x3) / 2 + 10, (y1 + y3) / 2 + 20);
     } else {
-      // 显示无法构成三角形的提示
       ctx.font = '18px Arial';
       ctx.fillStyle = '#EF4444';
       ctx.textAlign = 'center';
@@ -152,6 +154,18 @@ function TriangleSidesDemo() {
       <CardContent>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
+            <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
+              <div className="font-medium mb-2 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-blue-600" />
+                定理讲解
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                三角形任意两边之和大于第三边，任意两边之差小于第三边。
+                这是因为两点之间线段最短，如果两边之和等于或小于第三边，
+                就无法构成封闭图形。
+              </p>
+            </div>
+
             <div>
               <label className="text-sm font-medium mb-2 block">边 a: {sideA}</label>
               <Slider
@@ -185,7 +199,7 @@ function TriangleSidesDemo() {
                 className="w-full"
               />
             </div>
-            
+
             <div className={`p-4 rounded-lg ${canForm ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
               <div className="flex items-start gap-2">
                 {canForm ? (
@@ -253,7 +267,6 @@ function TriangleAnglesDemo() {
     const centerY = canvas.height / 2;
     const size = 100;
 
-    // 计算三角形顶点
     const radA = (angleA * Math.PI) / 180;
     const radB = (angleB * Math.PI) / 180;
     const radC = (angleC * Math.PI) / 180;
@@ -267,7 +280,6 @@ function TriangleAnglesDemo() {
     const x3 = centerX - size * Math.cos(radC);
     const y3 = centerY + size * Math.sin(radC);
 
-    // 绘制三角形
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -281,7 +293,6 @@ function TriangleAnglesDemo() {
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // 绘制角标记
     drawAngleArc(ctx, x1, y1, x3, x2, 40, `${angleA}°`);
     drawAngleArc(ctx, x2, y2, x1, x3, 40, `${angleB}°`);
     drawAngleArc(ctx, x3, y3, x2, x1, 40, `${angleC}°`);
@@ -324,6 +335,17 @@ function TriangleAnglesDemo() {
       <CardContent>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
+            <div className="p-4 bg-green-50 dark:bg-green-900/20 rounded-lg">
+              <div className="font-medium mb-2 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-green-600" />
+                定理讲解
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                在任意三角形中，三个内角的度数之和总是等于180度。
+                这个定理是几何学的基础，可以用来计算未知角度或验证三角形。
+              </p>
+            </div>
+
             <div>
               <label className="text-sm font-medium mb-2 block">∠A: {angleA}°</label>
               <Slider
@@ -436,7 +458,6 @@ function TriangleExteriorDemo() {
     const x3 = centerX - size * Math.cos(radB);
     const y3 = centerY + size * Math.sin(radB);
 
-    // 绘制三角形
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
@@ -450,7 +471,6 @@ function TriangleExteriorDemo() {
     ctx.lineWidth = 3;
     ctx.stroke();
 
-    // 延长边形成外角
     ctx.beginPath();
     ctx.moveTo(x2, y2);
     ctx.lineTo(x2 + size * 0.8, y2 + size * 0.8);
@@ -460,12 +480,10 @@ function TriangleExteriorDemo() {
     ctx.stroke();
     ctx.setLineDash([]);
 
-    // 绘制内角
     drawAngleArc(ctx, x1, y1, x3, x2, 30, `${angleA}°`, '#EA580C');
     drawAngleArc(ctx, x3, y3, x2, x1, 30, `${angleB}°`, '#EA580C');
     drawAngleArc(ctx, x2, y2, x1, x3, 30, `${angleC}°`, '#EA580C');
 
-    // 绘制外角
     const extStartAngle = Math.atan2(y2 - x1, x2 - x1);
     const extEndAngle = Math.atan2((y2 + size * 0.8) - y2, (x2 + size * 0.8) - x2);
     
@@ -517,6 +535,17 @@ function TriangleExteriorDemo() {
       <CardContent>
         <div className="grid md:grid-cols-2 gap-6">
           <div className="space-y-4">
+            <div className="p-4 bg-orange-50 dark:bg-orange-900/20 rounded-lg">
+              <div className="font-medium mb-2 flex items-center gap-2">
+                <BookOpen className="h-5 w-5 text-orange-600" />
+                定理讲解
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-400">
+                外角定理是计算复杂角度的关键工具。外角等于与之不相邻的两个内角之和，
+                这为求解角度问题提供了重要的思路。
+              </p>
+            </div>
+
             <div>
               <label className="text-sm font-medium mb-2 block">∠A: {angleA}°</label>
               <Slider
@@ -578,6 +607,165 @@ function TriangleExteriorDemo() {
               </p>
             </div>
           </div>
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
+
+// 练习题组件
+function TrianglePractice() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showResult, setShowResult] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
+
+  const questions = [
+    {
+      question: "一个三角形的三边长分别为 3, 4, 5，判断是否可以构成三角形？",
+      options: ["可以构成", "不可以构成", "无法确定"],
+      correctAnswer: 0,
+      explanation: "因为 3 + 4 = 7 > 5, 4 + 5 = 9 > 3, 3 + 5 = 8 > 4，满足三边关系定理。"
+    },
+    {
+      question: "一个三角形的两个内角分别是 60° 和 70°，第三个内角是多少度？",
+      options: ["40°", "50°", "60°"],
+      correctAnswer: 1,
+      explanation: "根据内角和定理，第三个角 = 180° - 60° - 70° = 50°。"
+    },
+    {
+      question: "三角形的一个外角是 120°，与之相邻的内角是多少度？",
+      options: ["50°", "60°", "70°"],
+      correctAnswer: 1,
+      explanation: "外角与相邻内角互补，所以相邻内角 = 180° - 120° = 60°。"
+    },
+    {
+      question: "在△ABC中，∠A = 50°，∠B = 60°，则外角∠BCD等于多少度？",
+      options: ["100°", "110°", "120°"],
+      correctAnswer: 1,
+      explanation: "∠C = 180° - 50° - 60° = 70°，外角∠BCD = 180° - 70° = 110°（或直接用外角定理：50° + 60° = 110°）。"
+    },
+    {
+      question: "如果三角形的三边长分别为 a, b, c，且 a > b > c，则以下哪个不等式一定成立？",
+      options: ["a + b = c", "a + b < c", "a + b > c"],
+      correctAnswer: 2,
+      explanation: "根据三边关系定理，任意两边之和大于第三边，所以 a + b > c。"
+    }
+  ];
+
+  const currentQ = questions[currentQuestion];
+
+  const handleAnswer = (index: number) => {
+    setSelectedAnswer(String(index));
+    setShowResult(true);
+    if (index === currentQ.correctAnswer) {
+      setCorrectCount(correctCount + 1);
+    }
+  };
+
+  const nextQuestion = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(null);
+      setShowResult(false);
+    }
+  };
+
+  const resetPractice = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setCorrectCount(0);
+  };
+
+  return (
+    <Card className="bg-white/90 dark:bg-gray-800/90">
+      <CardHeader>
+        <CardTitle className="text-lg">三角形练习题</CardTitle>
+        <CardDescription>
+          巩固所学知识，提升解题能力
+        </CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          {currentQuestion < questions.length ? (
+            <>
+              <div className="flex justify-between items-center">
+                <Badge className="bg-blue-500">
+                  第 {currentQuestion + 1} / {questions.length} 题
+                </Badge>
+                <Badge className="bg-green-500">
+                  正确率: {correctCount}/{currentQuestion + (showResult ? 1 : 0)}
+                </Badge>
+              </div>
+
+              <div className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="text-lg font-semibold mb-4">{currentQ.question}</h3>
+                <div className="space-y-3">
+                  {currentQ.options.map((option, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => !showResult && handleAnswer(index)}
+                      variant={selectedAnswer === String(index) 
+                        ? (index === currentQ.correctAnswer ? "default" : "destructive")
+                        : showResult && index === currentQ.correctAnswer 
+                          ? "default" 
+                          : "outline"
+                      }
+                      className={`w-full justify-start text-left h-auto py-3 px-4 ${
+                        selectedAnswer === String(index) 
+                          ? (index === currentQ.correctAnswer ? "bg-green-500" : "bg-red-500")
+                          : showResult && index === currentQ.correctAnswer 
+                            ? "bg-green-500" 
+                            : ""
+                      }`}
+                      disabled={showResult}
+                    >
+                      <span className="mr-3 font-medium">{String.fromCharCode(65 + index)}.</span>
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {showResult && (
+                <div className={`p-4 rounded-lg ${selectedAnswer === String(currentQ.correctAnswer) ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    {selectedAnswer === String(currentQ.correctAnswer) ? (
+                      <CheckCircle2 className="h-5 w-5 text-green-600" />
+                    ) : (
+                      <XCircle className="h-5 w-5 text-red-600" />
+                    )}
+                    <span className="font-medium">
+                      {selectedAnswer === String(currentQ.correctAnswer) ? "回答正确！" : "回答错误"}
+                    </span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">
+                    解析：{currentQ.explanation}
+                  </p>
+                </div>
+              )}
+
+              {showResult && currentQuestion < questions.length - 1 && (
+                <Button onClick={nextQuestion} className="w-full">
+                  下一题
+                </Button>
+              )}
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-500 to-purple-600 rounded-full flex items-center justify-center">
+                <CheckCircle2 className="h-12 w-12 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">练习完成！</h3>
+              <p className="text-lg mb-6">
+                你答对了 <span className="text-green-600 font-bold">{correctCount}</span> / {questions.length} 题
+              </p>
+              <Button onClick={resetPractice} size="lg">
+                重新练习
+              </Button>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>

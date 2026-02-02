@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -17,12 +17,24 @@ import {
 import { TriangleChapter } from '@/components/TriangleChapter';
 import { CongruentChapter } from '@/components/CongruentChapter';
 import { SymmetryChapter } from '@/components/SymmetryChapter';
-import { FunctionChapter } from '@/components/FunctionChapter';
+// import { FunctionChapter } from '@/components/FunctionChapter';
 import { AlgebraChapter } from '@/components/AlgebraChapter';
 import { StrategyChapter } from '@/components/StrategyChapter';
 
 export default function MathLearningApp() {
   const [activeTab, setActiveTab] = useState('map');
+
+  // 监听来自学习地图的导航事件
+  useEffect(() => {
+    const handleNavigate = (event: CustomEvent) => {
+      setActiveTab(event.detail);
+    };
+
+    window.addEventListener('navigateToTab', handleNavigate as EventListener);
+    return () => {
+      window.removeEventListener('navigateToTab', handleNavigate as EventListener);
+    };
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
@@ -124,36 +136,42 @@ export default function MathLearningApp() {
                     description="几何基石，三边关系、内角和、外角定理"
                     color="blue"
                     icon={<Triangle className="h-8 w-8" />}
+                    tabValue="triangle"
                   />
                   <LearningMapCard 
                     title="第二章：全等三角形"
                     description="绝对核心，判定定理、证明方法、辅助线"
                     color="green"
                     icon={<Scale className="h-8 w-8" />}
+                    tabValue="congruent"
                   />
                   <LearningMapCard 
                     title="第三章：轴对称"
                     description="等腰三角形、三线合一、最短路径问题"
                     color="purple"
                     icon={<MoveHorizontal className="h-8 w-8" />}
+                    tabValue="symmetry"
                   />
                   <LearningMapCard 
                     title="第四章：整式乘法"
                     description="幂的运算、乘法公式、因式分解"
                     color="orange"
                     icon={<Divide className="h-8 w-8" />}
+                    tabValue="algebra"
                   />
                   <LearningMapCard 
                     title="第五章：分式"
                     description="分式运算、分式方程、验根方法"
                     color="pink"
                     icon={<Divide className="h-8 w-8" />}
+                    tabValue="algebra"
                   />
                   <LearningMapCard 
                     title="第六章：一次函数"
                     description="数形结合、k和b的几何意义、应用问题"
                     color="red"
                     icon={<FunctionSquare className="h-8 w-8" />}
+                    tabValue="function"
                   />
                 </div>
               </CardContent>
@@ -177,7 +195,10 @@ export default function MathLearningApp() {
 
           {/* 一次函数 */}
           <TabsContent value="function">
-            <FunctionChapter />
+            {/* <FunctionChapter /> */}
+            <div className="p-8 text-center">
+              <p className="text-gray-600 dark:text-gray-400">一次函数功能正在开发中...</p>
+            </div>
           </TabsContent>
 
           {/* 代数运算 */}
@@ -199,24 +220,33 @@ function LearningMapCard({
   title, 
   description, 
   color, 
-  icon 
+  icon,
+  tabValue
 }: { 
   title: string; 
   description: string; 
   color: string; 
   icon: React.ReactNode;
+  tabValue: string;
 }) {
   const colorClasses = {
-    blue: 'from-blue-500 to-blue-600 border-blue-200 dark:border-blue-800',
-    green: 'from-green-500 to-green-600 border-green-200 dark:border-green-800',
-    purple: 'from-purple-500 to-purple-600 border-purple-200 dark:border-purple-800',
-    orange: 'from-orange-500 to-orange-600 border-orange-200 dark:border-orange-800',
-    pink: 'from-pink-500 to-pink-600 border-pink-200 dark:border-pink-800',
-    red: 'from-red-500 to-red-600 border-red-200 dark:border-red-800',
+    blue: 'from-blue-500 to-blue-600 border-blue-200 dark:border-blue-800 hover:shadow-blue-500/30',
+    green: 'from-green-500 to-green-600 border-green-200 dark:border-green-800 hover:shadow-green-500/30',
+    purple: 'from-purple-500 to-purple-600 border-purple-200 dark:border-purple-800 hover:shadow-purple-500/30',
+    orange: 'from-orange-500 to-orange-600 border-orange-200 dark:border-orange-800 hover:shadow-orange-500/30',
+    pink: 'from-pink-500 to-pink-600 border-pink-200 dark:border-pink-800 hover:shadow-pink-500/30',
+    red: 'from-red-500 to-red-600 border-red-200 dark:border-red-800 hover:shadow-red-500/30',
   };
 
   return (
-    <Card className={`border-2 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${colorClasses[color as keyof typeof colorClasses].split(' ')[2]} bg-white/90 dark:bg-gray-800/90`}>
+    <Card 
+      className={`border-2 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${colorClasses[color as keyof typeof colorClasses].split(' ')[2]} bg-white/90 dark:bg-gray-800/90 hover:${colorClasses[color as keyof typeof colorClasses].split(' ')[3]}`}
+      onClick={() => {
+        // 触发父组件的状态更新
+        const event = new CustomEvent('navigateToTab', { detail: tabValue });
+        window.dispatchEvent(event);
+      }}
+    >
       <CardHeader>
         <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses].split(' ')[0]} ${colorClasses[color as keyof typeof colorClasses].split(' ')[1]} flex items-center justify-center text-white mb-4`}>
           {icon}

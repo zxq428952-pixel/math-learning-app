@@ -5,7 +5,8 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Slider } from '@/components/ui/slider';
 import { Badge } from '@/components/ui/badge';
-import { FunctionSquare, Info, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { FunctionSquare, Info, TrendingUp, TrendingDown, ArrowUpRight, ArrowDownRight, CheckCircle2, XCircle } from 'lucide-react';
 
 export function FunctionChapter() {
   return (
@@ -259,7 +260,7 @@ function FunctionGraph() {
       </CardContent>
     </Card>
   );
-}
+
 
 // 函数性质
 function FunctionProperties() {
@@ -376,6 +377,8 @@ function FunctionProperties() {
     </Card>
   );
 }
+
+
 
 // 方程与不等式
 function EquationInequality() {
@@ -511,6 +514,8 @@ function EquationInequality() {
   );
 }
 
+
+
 // 应用问题
 function ApplicationProblem() {
   const [speed, setSpeed] = useState(60);
@@ -622,4 +627,4 @@ function ApplicationProblem() {
       </CardContent>
     </Card>
   );
-}
+
