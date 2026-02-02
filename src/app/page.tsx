@@ -17,7 +17,7 @@ import {
 import { TriangleChapter } from '@/components/TriangleChapter';
 import { CongruentChapter } from '@/components/CongruentChapter';
 import { SymmetryChapter } from '@/components/SymmetryChapter';
-// import { FunctionChapter } from '@/components/FunctionChapter';
+import { FunctionChapter } from '@/components/FunctionChapter';
 import { AlgebraChapter } from '@/components/AlgebraChapter';
 import { StrategyChapter } from '@/components/StrategyChapter';
 
@@ -195,10 +195,7 @@ export default function MathLearningApp() {
 
           {/* 一次函数 */}
           <TabsContent value="function">
-            {/* <FunctionChapter /> */}
-            <div className="p-8 text-center">
-              <p className="text-gray-600 dark:text-gray-400">一次函数功能正在开发中...</p>
-            </div>
+            <FunctionChapter />
           </TabsContent>
 
           {/* 代数运算 */}

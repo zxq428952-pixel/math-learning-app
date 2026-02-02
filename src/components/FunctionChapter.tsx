@@ -24,7 +24,7 @@ export function FunctionChapter() {
       </Card>
 
       <Tabs defaultValue="graph" className="space-y-6">
-        <TabsList className="grid w-full grid-cols-4 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
+        <TabsList className="grid w-full grid-cols-5 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
           <TabsTrigger 
             value="graph"
             className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
@@ -49,6 +49,12 @@ export function FunctionChapter() {
           >
             应用问题
           </TabsTrigger>
+          <TabsTrigger 
+            value="practice"
+            className="data-[state=active]:bg-red-500 data-[state=active]:text-white"
+          >
+            练习题
+          </TabsTrigger>
         </TabsList>
 
         <TabsContent value="graph">
@@ -65,6 +71,10 @@ export function FunctionChapter() {
 
         <TabsContent value="application">
           <ApplicationProblem />
+        </TabsContent>
+
+        <TabsContent value="practice">
+          <FunctionPractice />
         </TabsContent>
       </Tabs>
     </div>
@@ -260,7 +270,7 @@ function FunctionGraph() {
       </CardContent>
     </Card>
   );
-
+}
 
 // 函数性质
 function FunctionProperties() {
@@ -377,8 +387,6 @@ function FunctionProperties() {
     </Card>
   );
 }
-
-
 
 // 方程与不等式
 function EquationInequality() {
@@ -514,8 +522,6 @@ function EquationInequality() {
   );
 }
 
-
-
 // 应用问题
 function ApplicationProblem() {
   const [speed, setSpeed] = useState(60);
@@ -627,4 +633,130 @@ function ApplicationProblem() {
       </CardContent>
     </Card>
   );
+}
 
+// 练习题组件
+function FunctionPractice() {
+  const [currentQuestion, setCurrentQuestion] = useState(0);
+  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [showResult, setShowResult] = useState(false);
+  const [correctCount, setCorrectCount] = useState(0);
+
+  const questions = [
+    {
+      question: "一次函数 y = 2x - 3 中，斜率 k 和截距 b 分别是多少？",
+      options: ["k=2, b=3", "k=2, b=-3", "k=-2, b=3", "k=-2, b=-3"],
+      correctAnswer: 1,
+      explanation: "在 y = kx + b 中，k 是斜率，b 是截距。所以 k = 2, b = -3。"
+    },
+    {
+      question: "一次函数 y = -2x + 1 的图像经过哪个象限？",
+      options: ["第一、二、三象限", "第一、二、四象限", "第一、三、四象限", "第二、三、四象限"],
+      correctAnswer: 1,
+      explanation: "k = -2 < 0，函数递减，从左上到右下；b = 1 > 0，与 y 轴交于正半轴。所以经过第一、二、四象限。"
+    },
+    {
+      question: "一次函数 y = 3x + 2 与 x 轴的交点坐标是？",
+      options: ["(0, 2)", "(2, 0)", "(-2/3, 0)", "(-3/2, 0)"],
+      correctAnswer: 2,
+      explanation: "与 x 轴交点时 y = 0，所以 3x + 2 = 0，解得 x = -2/3，交点为 (-2/3, 0)。"
+    },
+    {
+      question: "已知一次函数经过点 (1, 3) 和 (2, 5)，则函数的解析式是？",
+      options: ["y = 2x + 1", "y = 2x - 1", "y = x + 2", "y = -2x + 5"],
+      correctAnswer: 0,
+      explanation: "斜率 k = (5-3)/(2-1) = 2，代入点 (1,3) 得 3 = 2×1 + b，解得 b = 1，所以 y = 2x + 1。"
+    },
+    {
+      question: "不等式 2x - 3 > 1 的解集是？",
+      options: ["x > 1", "x > 2", "x < 1", "x < 2"],
+      correctAnswer: 1,
+      explanation: "2x - 3 > 1，移项得 2x > 4，所以 x > 2。"
+    }
+  ];
+
+  const currentQ = questions[currentQuestion];
+
+  const handleAnswer = (index: number) => {
+    setSelectedAnswer(String(index));
+    setShowResult(true);
+    if (index === currentQ.correctAnswer) {
+      setCorrectCount(correctCount + 1);
+    }
+  };
+
+  const nextQuestion = () => {
+    if (currentQuestion < questions.length - 1) {
+      setCurrentQuestion(currentQuestion + 1);
+      setSelectedAnswer(null);
+      setShowResult(false);
+    }
+  };
+
+  const resetPractice = () => {
+    setCurrentQuestion(0);
+    setSelectedAnswer(null);
+    setShowResult(false);
+    setCorrectCount(0);
+  };
+
+  return (
+    <Card className="bg-white/90 dark:bg-gray-800/90">
+      <CardHeader>
+        <CardTitle className="text-lg">一次函数练习题</CardTitle>
+        <CardDescription>巩固一次函数的图像和性质</CardDescription>
+      </CardHeader>
+      <CardContent>
+        <div className="space-y-6">
+          {currentQuestion < questions.length ? (
+            <>
+              <div className="flex justify-between items-center">
+                <Badge className="bg-red-500">第 {currentQuestion + 1} / {questions.length} 题</Badge>
+                <Badge className="bg-green-500">正确率: {correctCount}/{currentQuestion + (showResult ? 1 : 0)}</Badge>
+              </div>
+
+              <div className="p-6 bg-gray-50 dark:bg-gray-700 rounded-lg">
+                <h3 className="text-lg font-semibold mb-4">{currentQ.question}</h3>
+                <div className="space-y-3">
+                  {currentQ.options.map((option, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => !showResult && handleAnswer(index)}
+                      variant={selectedAnswer === String(index) ? (index === currentQ.correctAnswer ? "default" : "destructive") : showResult && index === currentQ.correctAnswer ? "default" : "outline"}
+                      className={`w-full justify-start text-left h-auto py-3 px-4 ${selectedAnswer === String(index) ? (index === currentQ.correctAnswer ? "bg-green-500" : "bg-red-500") : showResult && index === currentQ.correctAnswer ? "bg-green-500" : ""}`}
+                      disabled={showResult}
+                    >
+                      <span className="mr-3 font-medium">{String.fromCharCode(65 + index)}.</span>
+                      {option}
+                    </Button>
+                  ))}
+                </div>
+              </div>
+
+              {showResult && (
+                <div className={`p-4 rounded-lg ${selectedAnswer === String(currentQ.correctAnswer) ? 'bg-green-50 dark:bg-green-900/20' : 'bg-red-50 dark:bg-red-900/20'}`}>
+                  <div className="flex items-center gap-2 mb-2">
+                    {selectedAnswer === String(currentQ.correctAnswer) ? <CheckCircle2 className="h-5 w-5 text-green-600" /> : <XCircle className="h-5 w-5 text-red-600" />}
+                    <span className="font-medium">{selectedAnswer === String(currentQ.correctAnswer) ? "回答正确！" : "回答错误"}</span>
+                  </div>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">解析：{currentQ.explanation}</p>
+                </div>
+              )}
+
+              {showResult && currentQuestion < questions.length - 1 && <Button onClick={nextQuestion} className="w-full">下一题</Button>}
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-red-500 to-pink-600 rounded-full flex items-center justify-center">
+                <CheckCircle2 className="h-12 w-12 text-white" />
+              </div>
+              <h3 className="text-2xl font-bold mb-4">练习完成！</h3>
+              <p className="text-lg mb-6">你答对了 <span className="text-green-600 font-bold">{correctCount}</span> / {questions.length} 题</p>
+              <Button onClick={resetPractice} size="lg">重新练习</Button>
+            </div>
+          )}
+        </div>
+      </CardContent>
+    </Card>
+  );
+}
