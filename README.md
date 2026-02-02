@@ -1,358 +1,234 @@
-# projects
+# 初二数学（人教版上册）提分作战方案
 
-这是一个基于 [Next.js 16](https://nextjs.org) + [shadcn/ui](https://ui.shadcn.com) 的全栈应用项目，由扣子编程 CLI 创建。
+一个现代化的交互式数学学习应用，涵盖三角形、全等三角形、轴对称、一次函数等核心章节。
 
-## 快速开始
+## 🎯 功能特点
 
-### 启动开发服务器
+- **交互式可视化学习**：通过动态图像和滑块控制，直观理解数学概念
+- **详细讲解与练习**：每个章节包含定理讲解、记忆方法和练习题
+- **学习地图导航**：点击学习地图卡片，快速跳转到对应章节
+- **响应式设计**：支持深色模式，适配各种设备
+- **现代化技术栈**：Next.js 16 + React 19 + TypeScript + shadcn/ui
 
+## 📚 章节内容
+
+1. **三角形**
+   - 三边关系（两边之和大于第三边）
+   - 内角和定理（180°）
+   - 外角定理
+   - 交互式练习题
+
+2. **全等三角形**
+   - SSS、SAS、ASA、AAS、HL 判定定理
+   - 动态演示
+   - 练习题巩固
+
+3. **轴对称**
+   - 等腰三角形三线合一
+   - 轴对称图形
+   - 将军饮马模型
+   - 练习题
+
+4. **一次函数**
+   - 动态图像绘制（调整 k 和 b 参数）
+   - 函数性质分析
+   - 方程与不等式关系
+   - 应用问题示例
+   - 练习题
+
+5. **代数运算**
+   - 整式运算
+   - 因式分解
+
+6. **提分策略**
+   - 学习方法指导
+   - 知识点梳理
+
+## 🚀 快速开始
+
+### 本地开发
+
+1. 安装依赖
 ```bash
-coze dev
+pnpm install
 ```
 
-启动后，在浏览器中打开 [http://localhost:5000](http://localhost:5000) 查看应用。
+2. 启动开发服务器
+```bash
+pnpm run dev
+```
 
-开发服务器支持热更新，修改代码后页面会自动刷新。
+3. 打开浏览器访问
+```
+http://localhost:5000
+```
 
 ### 构建生产版本
 
 ```bash
-coze build
+pnpm run build
 ```
 
 ### 启动生产服务器
 
 ```bash
-coze start
+pnpm run start
 ```
 
-## 项目结构
+## 🌐 部署到公共平台
 
-```
-src/
-├── app/                      # Next.js App Router 目录
-│   ├── layout.tsx           # 根布局组件
-│   ├── page.tsx             # 首页
-│   ├── globals.css          # 全局样式（包含 shadcn 主题变量）
-│   └── [route]/             # 其他路由页面
-├── components/              # React 组件目录
-│   └── ui/                  # shadcn/ui 基础组件（优先使用）
-│       ├── button.tsx
-│       ├── card.tsx
-│       └── ...
-├── lib/                     # 工具函数库
-│   └── utils.ts            # cn() 等工具函数
-└── hooks/                   # 自定义 React Hooks（可选）
-```
+### 方式一：部署到 Vercel（推荐）
 
-## 核心开发规范
+#### 1. 准备代码仓库
 
-### 1. 组件开发
-
-**优先使用 shadcn/ui 基础组件**
-
-本项目已预装完整的 shadcn/ui 组件库，位于 `src/components/ui/` 目录。开发时应优先使用这些组件作为基础：
-
-```tsx
-// ✅ 推荐：使用 shadcn 基础组件
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-
-export default function MyComponent() {
-  return (
-    <Card>
-      <CardHeader>标题</CardHeader>
-      <CardContent>
-        <Input placeholder="输入内容" />
-        <Button>提交</Button>
-      </CardContent>
-    </Card>
-  );
-}
-```
-
-**可用的 shadcn 组件清单**
-
-- 表单：`button`, `input`, `textarea`, `select`, `checkbox`, `radio-group`, `switch`, `slider`
-- 布局：`card`, `separator`, `tabs`, `accordion`, `collapsible`, `scroll-area`
-- 反馈：`alert`, `alert-dialog`, `dialog`, `toast`, `sonner`, `progress`
-- 导航：`dropdown-menu`, `menubar`, `navigation-menu`, `context-menu`
-- 数据展示：`table`, `avatar`, `badge`, `hover-card`, `tooltip`, `popover`
-- 其他：`calendar`, `command`, `carousel`, `resizable`, `sidebar`
-
-详见 `src/components/ui/` 目录下的具体组件实现。
-
-### 2. 路由开发
-
-Next.js 使用文件系统路由，在 `src/app/` 目录下创建文件夹即可添加路由：
+将项目代码推送到 GitHub 或 GitLab 仓库：
 
 ```bash
-# 创建新路由 /about
-src/app/about/page.tsx
+# 初始化 Git 仓库
+git init
 
-# 创建动态路由 /posts/[id]
-src/app/posts/[id]/page.tsx
+# 添加所有文件
+git add .
 
-# 创建路由组（不影响 URL）
-src/app/(marketing)/about/page.tsx
+# 提交
+git commit -m "Initial commit"
 
-# 创建 API 路由
-src/app/api/users/route.ts
+# 添加远程仓库（替换为你的仓库地址）
+git remote add origin https://github.com/your-username/your-repo.git
+
+# 推送到远程仓库
+git push -u origin main
 ```
 
-**页面组件示例**
+#### 2. 部署到 Vercel
 
-```tsx
-// src/app/about/page.tsx
-import { Button } from '@/components/ui/button';
+1. 访问 [vercel.com](https://vercel.com)
+2. 使用 GitHub 账号登录
+3. 点击 "Add New Project" 或 "Import Project"
+4. 选择你的 GitHub 仓库
+5. 配置部署设置：
+   - **Framework Preset**: Next.js
+   - **Root Directory**: `./` （根目录）
+   - **Build Command**: `pnpm run build`
+   - **Output Directory**: `.next`
+   - **Install Command**: `pnpm install`
+6. 点击 "Deploy"
 
-export const metadata = {
-  title: '关于我们',
-  description: '关于页面描述',
-};
+#### 3. 获取访问链接
 
-export default function AboutPage() {
-  return (
-    <div>
-      <h1>关于我们</h1>
-      <Button>了解更多</Button>
-    </div>
-  );
-}
+部署完成后，Vercel 会提供一个访问链接，格式为：
+```
+https://your-app-name.vercel.app
 ```
 
-**动态路由示例**
+你可以：
+- 自定义域名（在 Vercel 项目设置中）
+- 分享链接给其他人使用
 
-```tsx
-// src/app/posts/[id]/page.tsx
-export default async function PostPage({
-  params,
-}: {
-  params: Promise<{ id: string }>;
-}) {
-  const { id } = await params;
+### 方式二：部署到 Netlify
 
-  return <div>文章 ID: {id}</div>;
-}
+1. 访问 [netlify.com](https://netlify.com)
+2. 登录并点击 "Add new site" > "Import an existing project"
+3. 连接你的 GitHub 仓库
+4. 配置构建设置：
+   - **Build command**: `pnpm run build`
+   - **Publish directory**: `.next`
+   - **Base directory**: `./`
+5. 点击 "Deploy site"
+
+### 方式三：部署到 Cloudflare Pages
+
+1. 访问 [pages.cloudflare.com](https://pages.cloudflare.com)
+2. 登录并点击 "Create a project"
+3. 连接你的 GitHub 仓库
+4. 配置构建设置：
+   - **Framework preset**: Next.js
+   - **Build command**: `pnpm run build`
+   - **Build output directory**: `.next`
+5. 点击 "Save and Deploy"
+
+## 📝 技术栈
+
+- **框架**: Next.js 16 (App Router)
+- **UI 库**: React 19
+- **语言**: TypeScript 5
+- **组件库**: shadcn/ui (基于 Radix UI)
+- **样式**: Tailwind CSS 4
+- **包管理器**: pnpm
+
+## 🎨 UI 组件
+
+项目使用 shadcn/ui 组件库，提供：
+- Button（按钮）
+- Card（卡片）
+- Slider（滑块）
+- Tabs（标签页）
+- Badge（徽章）
+- 等等...
+
+## 📦 项目结构
+
+```
+.
+├── src/
+│   ├── app/           # Next.js App Router
+│   │   ├── page.tsx   # 主页面
+│   │   └── ...
+│   └── components/    # React 组件
+│       ├── ui/        # shadcn/ui 组件
+│       ├── TriangleChapter.tsx
+│       ├── CongruentChapter.tsx
+│       ├── SymmetryChapter.tsx
+│       ├── FunctionChapter.tsx
+│       ├── AlgebraChapter.tsx
+│       └── StrategyChapter.tsx
+├── public/            # 静态资源
+├── package.json       # 项目依赖
+├── tsconfig.json      # TypeScript 配置
+├── next.config.ts     # Next.js 配置
+├── tailwind.config.ts # Tailwind CSS 配置
+└── vercel.json        # Vercel 部署配置
 ```
 
-**API 路由示例**
+## 🔧 开发规范
 
-```tsx
-// src/app/api/users/route.ts
-import { NextResponse } from 'next/server';
+### 包管理器
 
-export async function GET() {
-  return NextResponse.json({ users: [] });
-}
-
-export async function POST(request: Request) {
-  const body = await request.json();
-  return NextResponse.json({ success: true });
-}
-```
-
-### 3. 依赖管理
-
-**必须使用 pnpm 管理依赖**
+本项目使用 **pnpm** 作为包管理器：
 
 ```bash
-# ✅ 安装依赖
+# 安装依赖
 pnpm install
 
-# ✅ 添加新依赖
-pnpm add package-name
+# 添加依赖
+pnpm add <package-name>
 
-# ✅ 添加开发依赖
-pnpm add -D package-name
+# 添加开发依赖
+pnpm add -D <package-name>
 
-# ❌ 禁止使用 npm 或 yarn
-# npm install  # 错误！
-# yarn add     # 错误！
+# 移除依赖
+pnpm remove <package-name>
 ```
 
-项目已配置 `preinstall` 脚本，使用其他包管理器会报错。
+### 代码风格
 
-### 4. 样式开发
+- 使用 TypeScript 类型检查
+- 遵循 React Hooks 最佳实践
+- 组件命名使用 PascalCase
+- 文件命名与组件名称一致
 
-**使用 Tailwind CSS v4**
+## 📄 许可证
 
-本项目使用 Tailwind CSS v4 进行样式开发，并已配置 shadcn 主题变量。
+MIT License
 
-```tsx
-// 使用 Tailwind 类名
-<div className="flex items-center gap-4 p-4 rounded-lg bg-background">
-  <Button className="bg-primary text-primary-foreground">
-    主要按钮
-  </Button>
-</div>
+## 🤝 贡献
 
-// 使用 cn() 工具函数合并类名
-import { cn } from '@/lib/utils';
+欢迎提交 Issue 和 Pull Request！
 
-<div className={cn(
-  "base-class",
-  condition && "conditional-class",
-  className
-)}>
-  内容
-</div>
-```
+## 📮 联系方式
 
-**主题变量**
+如有问题或建议，欢迎反馈。
 
-主题变量定义在 `src/app/globals.css` 中，支持亮色/暗色模式：
+---
 
-- `--background`, `--foreground`
-- `--primary`, `--primary-foreground`
-- `--secondary`, `--secondary-foreground`
-- `--muted`, `--muted-foreground`
-- `--accent`, `--accent-foreground`
-- `--destructive`, `--destructive-foreground`
-- `--border`, `--input`, `--ring`
-
-### 5. 表单开发
-
-推荐使用 `react-hook-form` + `zod` 进行表单开发：
-
-```tsx
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from 'zod';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-
-const formSchema = z.object({
-  username: z.string().min(2, '用户名至少 2 个字符'),
-  email: z.string().email('请输入有效的邮箱'),
-});
-
-export default function MyForm() {
-  const form = useForm({
-    resolver: zodResolver(formSchema),
-    defaultValues: { username: '', email: '' },
-  });
-
-  const onSubmit = (data: z.infer<typeof formSchema>) => {
-    console.log(data);
-  };
-
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)}>
-      <Input {...form.register('username')} />
-      <Input {...form.register('email')} />
-      <Button type="submit">提交</Button>
-    </form>
-  );
-}
-```
-
-### 6. 数据获取
-
-**服务端组件（推荐）**
-
-```tsx
-// src/app/posts/page.tsx
-async function getPosts() {
-  const res = await fetch('https://api.example.com/posts', {
-    cache: 'no-store', // 或 'force-cache'
-  });
-  return res.json();
-}
-
-export default async function PostsPage() {
-  const posts = await getPosts();
-
-  return (
-    <div>
-      {posts.map(post => (
-        <div key={post.id}>{post.title}</div>
-      ))}
-    </div>
-  );
-}
-```
-
-**客户端组件**
-
-```tsx
-'use client';
-
-import { useEffect, useState } from 'react';
-
-export default function ClientComponent() {
-  const [data, setData] = useState(null);
-
-  useEffect(() => {
-    fetch('/api/data')
-      .then(res => res.json())
-      .then(setData);
-  }, []);
-
-  return <div>{JSON.stringify(data)}</div>;
-}
-```
-
-## 常见开发场景
-
-### 添加新页面
-
-1. 在 `src/app/` 下创建文件夹和 `page.tsx`
-2. 使用 shadcn 组件构建 UI
-3. 根据需要添加 `layout.tsx` 和 `loading.tsx`
-
-### 创建业务组件
-
-1. 在 `src/components/` 下创建组件文件（非 UI 组件）
-2. 优先组合使用 `src/components/ui/` 中的基础组件
-3. 使用 TypeScript 定义 Props 类型
-
-### 添加全局状态
-
-推荐使用 React Context 或 Zustand：
-
-```tsx
-// src/lib/store.ts
-import { create } from 'zustand';
-
-interface Store {
-  count: number;
-  increment: () => void;
-}
-
-export const useStore = create<Store>((set) => ({
-  count: 0,
-  increment: () => set((state) => ({ count: state.count + 1 })),
-}));
-```
-
-### 集成数据库
-
-推荐使用 Prisma 或 Drizzle ORM，在 `src/lib/db.ts` 中配置。
-
-## 技术栈
-
-- **框架**: Next.js 16.1.1 (App Router)
-- **UI 组件**: shadcn/ui (基于 Radix UI)
-- **样式**: Tailwind CSS v4
-- **表单**: React Hook Form + Zod
-- **图标**: Lucide React
-- **字体**: Geist Sans & Geist Mono
-- **包管理器**: pnpm 9+
-- **TypeScript**: 5.x
-
-## 参考文档
-
-- [Next.js 官方文档](https://nextjs.org/docs)
-- [shadcn/ui 组件文档](https://ui.shadcn.com)
-- [Tailwind CSS 文档](https://tailwindcss.com/docs)
-- [React Hook Form](https://react-hook-form.com)
-
-## 重要提示
-
-1. **必须使用 pnpm** 作为包管理器
-2. **优先使用 shadcn/ui 组件** 而不是从零开发基础组件
-3. **遵循 Next.js App Router 规范**，正确区分服务端/客户端组件
-4. **使用 TypeScript** 进行类型安全开发
-5. **使用 `@/` 路径别名** 导入模块（已配置）
+**祝你学习愉快，数学成绩突飞猛进！** 📚✨

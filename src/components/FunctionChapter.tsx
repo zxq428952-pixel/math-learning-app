@@ -259,11 +259,11 @@ function FunctionGraph() {
           <div className="grid md:grid-cols-2 gap-4 text-sm">
             <div className="flex items-center gap-2">
               <TrendingUp className="h-5 w-5 text-green-600" />
-              <span>k > 0：上坡为正，直线上升</span>
+              <span>k &gt; 0：上坡为正，直线上升</span>
             </div>
             <div className="flex items-center gap-2">
               <TrendingDown className="h-5 w-5 text-red-600" />
-              <span>k &lt; 0：下坡为负，直线下降</span>
+              <span>k {'<'} 0：下坡为负，直线下降</span>
             </div>
           </div>
         </div>
@@ -376,8 +376,8 @@ function FunctionProperties() {
           <div className="text-sm">
             <p className="font-medium mb-2">核心性质总结</p>
             <p className="text-gray-600 dark:text-gray-400">
-              • k > 0：增函数，从左下到右上<br />
-              • k &lt; 0：减函数，从左上到右下<br />
+              • k &gt; 0：增函数，从左下到右上<br />
+              • k {'<'} 0：减函数，从左上到右下<br />
               • |k| 越大，直线越陡<br />
               • b 决定直线与 y 轴的交点位置
             </p>
@@ -476,7 +476,7 @@ function EquationInequality() {
             <div className="p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg">
               <div className="font-medium mb-2">不等式（大于）</div>
               <div className="text-sm space-y-2">
-                <p className="font-mono">kx + b > 0</p>
+                <p className="font-mono">kx + b &gt; 0</p>
                 {k !== 0 ? (
                   <p className="text-gray-600 dark:text-gray-400">
                     {k > 0 ? `x > ${(-b / k).toFixed(2)}` : `x < ${(-b / k).toFixed(2)}`}
@@ -512,7 +512,7 @@ function EquationInequality() {
               <p className="font-medium mb-2">数形结合</p>
               <p className="text-gray-600 dark:text-gray-400">
                 方程 kx + b = 0 的解就是函数图像与 x 轴交点的横坐标；<br />
-                不等式 kx + b > 0 的解就是函数图像在 x 轴上方部分对应的 x 的取值范围。
+                不等式 kx + b &gt; 0 的解就是函数图像在 x 轴上方部分对应的 x 的取值范围。
               </p>
             </div>
           </div>
