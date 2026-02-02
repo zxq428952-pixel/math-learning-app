@@ -24,6 +24,17 @@ import { StrategyChapter } from '@/components/StrategyChapter';
 export default function MathLearningApp() {
   const [activeTab, setActiveTab] = useState('map');
 
+  // 广东省北师大版八年级数学上册章节
+  const chapters = [
+    { id: 'pythagoras', name: '勾股定理', icon: Triangle, color: 'blue', description: '探索直角三角形的奥秘' },
+    { id: 'real-numbers', name: '实数', icon: Divide, color: 'purple', description: '无理数与实数运算' },
+    { id: 'coordinates', name: '位置与坐标', icon: BookOpen, color: 'green', description: '平面直角坐标系' },
+    { id: 'function', name: '一次函数', icon: FunctionSquare, color: 'red', description: '函数图像与性质' },
+    { id: 'equations', name: '二元一次方程组', icon: Brain, color: 'orange', description: '方程组的解法与应用' },
+    { id: 'statistics', name: '数据的分析', icon: TrendingUp, color: 'pink', description: '平均数、中位数、众数' },
+    { id: 'parallel', name: '平行线的证明', icon: MoveHorizontal, color: 'indigo', description: '几何证明与推理' },
+  ];
+
   // 监听来自学习地图的导航事件
   useEffect(() => {
     const handleNavigate = (event: CustomEvent) => {
@@ -48,7 +59,7 @@ export default function MathLearningApp() {
               </div>
               <div>
                 <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
-                  初二数学（上）提分作战方案
+                  广东省北师大版八年级数学（上）
                 </h1>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
                   图形化学习 · 可视化理解 · 系统梳理
@@ -56,7 +67,7 @@ export default function MathLearningApp() {
               </div>
             </div>
             <Badge variant="secondary" className="text-sm">
-              人教版上册
+              北师大版上册
             </Badge>
           </div>
         </div>
@@ -126,52 +137,59 @@ export default function MathLearningApp() {
                   学习路线图
                 </CardTitle>
                 <CardDescription>
-                  初二数学上册核心知识体系，从"算数"到"推理"的关键分水岭
+                  广东省北师大版八年级数学上册核心知识体系
                 </CardDescription>
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                   <LearningMapCard 
-                    title="第一章：三角形"
-                    description="几何基石，三边关系、内角和、外角定理"
+                    title="第一章：勾股定理"
+                    description="直角三角形三边关系、勾股定理的证明与应用"
                     color="blue"
                     icon={<Triangle className="h-8 w-8" />}
-                    tabValue="triangle"
+                    tabValue="pythagoras"
                   />
                   <LearningMapCard 
-                    title="第二章：全等三角形"
-                    description="绝对核心，判定定理、证明方法、辅助线"
-                    color="green"
-                    icon={<Scale className="h-8 w-8" />}
-                    tabValue="congruent"
-                  />
-                  <LearningMapCard 
-                    title="第三章：轴对称"
-                    description="等腰三角形、三线合一、最短路径问题"
+                    title="第二章：实数"
+                    description="平方根、立方根、无理数、实数运算"
                     color="purple"
-                    icon={<MoveHorizontal className="h-8 w-8" />}
-                    tabValue="symmetry"
-                  />
-                  <LearningMapCard 
-                    title="第四章：整式乘法"
-                    description="幂的运算、乘法公式、因式分解"
-                    color="orange"
                     icon={<Divide className="h-8 w-8" />}
-                    tabValue="algebra"
+                    tabValue="real-numbers"
                   />
                   <LearningMapCard 
-                    title="第五章：分式"
-                    description="分式运算、分式方程、验根方法"
-                    color="pink"
-                    icon={<Divide className="h-8 w-8" />}
-                    tabValue="algebra"
+                    title="第三章：位置与坐标"
+                    description="平面直角坐标系、点与坐标、距离公式"
+                    color="green"
+                    icon={<BookOpen className="h-8 w-8" />}
+                    tabValue="coordinates"
                   />
                   <LearningMapCard 
-                    title="第六章：一次函数"
-                    description="数形结合、k和b的几何意义、应用问题"
+                    title="第四章：一次函数"
+                    description="函数概念、图像与性质、一次函数的应用"
                     color="red"
                     icon={<FunctionSquare className="h-8 w-8" />}
                     tabValue="function"
+                  />
+                  <LearningMapCard 
+                    title="第五章：二元一次方程组"
+                    description="代入消元法、加减消元法、方程组应用"
+                    color="orange"
+                    icon={<Brain className="h-8 w-8" />}
+                    tabValue="equations"
+                  />
+                  <LearningMapCard 
+                    title="第六章：数据的分析"
+                    description="平均数、中位数、众数、数据的波动"
+                    color="pink"
+                    icon={<TrendingUp className="h-8 w-8" />}
+                    tabValue="statistics"
+                  />
+                  <LearningMapCard 
+                    title="第七章：平行线的证明"
+                    description="平行线的判定与性质、几何证明方法"
+                    color="indigo"
+                    icon={<MoveHorizontal className="h-8 w-8" />}
+                    tabValue="parallel"
                   />
                 </div>
               </CardContent>
