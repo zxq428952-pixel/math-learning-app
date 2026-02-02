@@ -1,37 +1,54 @@
 'use client';
 
+'use client';
+
 import { useState, useEffect } from 'react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
 import { 
   Triangle, 
-  Scale, 
+  Square, 
   MoveHorizontal, 
   FunctionSquare, 
   Divide, 
   BookOpen,
   TrendingUp,
-  Brain
+  Brain,
+  Infinity,
+  BarChart3,
+  MapPin,
+  CheckCircle2
 } from 'lucide-react';
-import { TriangleChapter } from '@/components/TriangleChapter';
-import { CongruentChapter } from '@/components/CongruentChapter';
-import { SymmetryChapter } from '@/components/SymmetryChapter';
-import { FunctionChapter } from '@/components/FunctionChapter';
-import { AlgebraChapter } from '@/components/AlgebraChapter';
-import { StrategyChapter } from '@/components/StrategyChapter';
+import { PythagorasChapter } from '@/components/PythagorasChapter';
+import { RealNumbersChapter } from '@/components/RealNumbersChapter';
+import { CoordinateChapter } from '@/components/CoordinateChapter';
+import { LinearEquationsChapter } from '@/components/LinearEquationsChapter';
+import { DataAnalysisChapter } from '@/components/DataAnalysisChapter';
+import { ParallelLinesChapter } from '@/components/ParallelLinesChapter';
 
 export default function MathLearningApp() {
   const [activeTab, setActiveTab] = useState('map');
 
+  // 颜色映射
+  const colorClasses: Record<string, string> = {
+    blue: 'from-blue-500 to-blue-600 border-blue-200 dark:border-blue-800 hover:shadow-blue-500/30',
+    purple: 'from-purple-500 to-purple-600 border-purple-200 dark:border-purple-800 hover:shadow-purple-500/30',
+    green: 'from-green-500 to-green-600 border-green-200 dark:border-green-800 hover:shadow-green-500/30',
+    red: 'from-red-500 to-red-600 border-red-200 dark:border-red-800 hover:shadow-red-500/30',
+    orange: 'from-orange-500 to-orange-600 border-orange-200 dark:border-orange-800 hover:shadow-orange-500/30',
+    cyan: 'from-cyan-500 to-cyan-600 border-cyan-200 dark:border-cyan-800 hover:shadow-cyan-500/30',
+    indigo: 'from-indigo-500 to-indigo-600 border-indigo-200 dark:border-indigo-800 hover:shadow-indigo-500/30'
+  };
+
   // 广东省北师大版八年级数学上册章节
   const chapters = [
     { id: 'pythagoras', name: '勾股定理', icon: Triangle, color: 'blue', description: '探索直角三角形的奥秘' },
-    { id: 'real-numbers', name: '实数', icon: Divide, color: 'purple', description: '无理数与实数运算' },
-    { id: 'coordinates', name: '位置与坐标', icon: BookOpen, color: 'green', description: '平面直角坐标系' },
-    { id: 'function', name: '一次函数', icon: FunctionSquare, color: 'red', description: '函数图像与性质' },
-    { id: 'equations', name: '二元一次方程组', icon: Brain, color: 'orange', description: '方程组的解法与应用' },
-    { id: 'statistics', name: '数据的分析', icon: TrendingUp, color: 'pink', description: '平均数、中位数、众数' },
+    { id: 'real-numbers', name: '实数', icon: Infinity, color: 'purple', description: '无理数与实数运算' },
+    { id: 'coordinates', name: '位置与坐标', icon: MapPin, color: 'green', description: '平面直角坐标系' },
+    { id: 'equations', name: '二元一次方程组', icon: FunctionSquare, color: 'orange', description: '方程组的解法与应用' },
+    { id: 'statistics', name: '数据的分析', icon: BarChart3, color: 'cyan', description: '平均数、中位数、众数' },
     { id: 'parallel', name: '平行线的证明', icon: MoveHorizontal, color: 'indigo', description: '几何证明与推理' },
   ];
 
@@ -77,54 +94,54 @@ export default function MathLearningApp() {
       <main className="container mx-auto px-4 py-8">
         <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
           <TabsList className="grid w-full grid-cols-7 gap-1 h-auto p-1 bg-white/50 dark:bg-gray-800/50 backdrop-blur-sm">
-            <TabsTrigger 
-              value="map" 
+            <TabsTrigger
+              value="map"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
               <BookOpen className="h-4 w-4 mr-2" />
               学习地图
             </TabsTrigger>
-            <TabsTrigger 
-              value="triangle"
+            <TabsTrigger
+              value="pythagoras"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
               <Triangle className="h-4 w-4 mr-2" />
-              三角形
+              勾股定理
             </TabsTrigger>
-            <TabsTrigger 
-              value="congruent"
+            <TabsTrigger
+              value="real-numbers"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
-              <Scale className="h-4 w-4 mr-2" />
-              全等三角形
+              <Infinity className="h-4 w-4 mr-2" />
+              实数
             </TabsTrigger>
-            <TabsTrigger 
-              value="symmetry"
+            <TabsTrigger
+              value="coordinates"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
-              <MoveHorizontal className="h-4 w-4 mr-2" />
-              轴对称
+              <MapPin className="h-4 w-4 mr-2" />
+              位置与坐标
             </TabsTrigger>
-            <TabsTrigger 
-              value="function"
+            <TabsTrigger
+              value="equations"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
               <FunctionSquare className="h-4 w-4 mr-2" />
-              一次函数
+              二元一次方程组
             </TabsTrigger>
-            <TabsTrigger 
-              value="algebra"
+            <TabsTrigger
+              value="statistics"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
-              <Divide className="h-4 w-2 mr-2" />
-              代数运算
+              <BarChart3 className="h-4 w-4 mr-2" />
+              数据的分析
             </TabsTrigger>
-            <TabsTrigger 
-              value="strategy"
+            <TabsTrigger
+              value="parallel"
               className="data-[state=active]:bg-gradient-to-r data-[state=active]:from-blue-500 data-[state=active]:to-purple-600 data-[state=active]:text-white"
             >
-              <TrendingUp className="h-4 w-4 mr-2" />
-              提分策略
+              <MoveHorizontal className="h-4 w-4 mr-2" />
+              平行线的证明
             </TabsTrigger>
           </TabsList>
 
@@ -142,88 +159,49 @@ export default function MathLearningApp() {
               </CardHeader>
               <CardContent>
                 <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  <LearningMapCard 
-                    title="第一章：勾股定理"
-                    description="直角三角形三边关系、勾股定理的证明与应用"
-                    color="blue"
-                    icon={<Triangle className="h-8 w-8" />}
-                    tabValue="pythagoras"
-                  />
-                  <LearningMapCard 
-                    title="第二章：实数"
-                    description="平方根、立方根、无理数、实数运算"
-                    color="purple"
-                    icon={<Divide className="h-8 w-8" />}
-                    tabValue="real-numbers"
-                  />
-                  <LearningMapCard 
-                    title="第三章：位置与坐标"
-                    description="平面直角坐标系、点与坐标、距离公式"
-                    color="green"
-                    icon={<BookOpen className="h-8 w-8" />}
-                    tabValue="coordinates"
-                  />
-                  <LearningMapCard 
-                    title="第四章：一次函数"
-                    description="函数概念、图像与性质、一次函数的应用"
-                    color="red"
-                    icon={<FunctionSquare className="h-8 w-8" />}
-                    tabValue="function"
-                  />
-                  <LearningMapCard 
-                    title="第五章：二元一次方程组"
-                    description="代入消元法、加减消元法、方程组应用"
-                    color="orange"
-                    icon={<Brain className="h-8 w-8" />}
-                    tabValue="equations"
-                  />
-                  <LearningMapCard 
-                    title="第六章：数据的分析"
-                    description="平均数、中位数、众数、数据的波动"
-                    color="pink"
-                    icon={<TrendingUp className="h-8 w-8" />}
-                    tabValue="statistics"
-                  />
-                  <LearningMapCard 
-                    title="第七章：平行线的证明"
-                    description="平行线的判定与性质、几何证明方法"
-                    color="indigo"
-                    icon={<MoveHorizontal className="h-8 w-8" />}
-                    tabValue="parallel"
-                  />
+                  {chapters.map((chapter) => (
+                    <LearningMapCard
+                      key={chapter.id}
+                      title={chapter.name}
+                      description={chapter.description}
+                      color={chapter.color}
+                      icon={<chapter.icon className="h-8 w-8" />}
+                      tabValue={chapter.id}
+                    />
+                  ))}
                 </div>
               </CardContent>
             </Card>
           </TabsContent>
 
-          {/* 三角形 */}
-          <TabsContent value="triangle">
-            <TriangleChapter />
+          {/* 勾股定理 */}
+          <TabsContent value="pythagoras">
+            <PythagorasChapter />
           </TabsContent>
 
-          {/* 全等三角形 */}
-          <TabsContent value="congruent">
-            <CongruentChapter />
+          {/* 实数 */}
+          <TabsContent value="real-numbers">
+            <RealNumbersChapter />
           </TabsContent>
 
-          {/* 轴对称 */}
-          <TabsContent value="symmetry">
-            <SymmetryChapter />
+          {/* 位置与坐标 */}
+          <TabsContent value="coordinates">
+            <CoordinateChapter />
           </TabsContent>
 
-          {/* 一次函数 */}
-          <TabsContent value="function">
-            <FunctionChapter />
+          {/* 二元一次方程组 */}
+          <TabsContent value="equations">
+            <LinearEquationsChapter />
           </TabsContent>
 
-          {/* 代数运算 */}
-          <TabsContent value="algebra">
-            <AlgebraChapter />
+          {/* 数据的分析 */}
+          <TabsContent value="statistics">
+            <DataAnalysisChapter />
           </TabsContent>
 
-          {/* 提分策略 */}
-          <TabsContent value="strategy">
-            <StrategyChapter />
+          {/* 平行线的证明 */}
+          <TabsContent value="parallel">
+            <ParallelLinesChapter />
           </TabsContent>
         </Tabs>
       </main>
@@ -231,45 +209,60 @@ export default function MathLearningApp() {
   );
 }
 
-function LearningMapCard({ 
-  title, 
-  description, 
-  color, 
+function LearningMapCard({
+  title,
+  description,
+  color,
   icon,
   tabValue
-}: { 
-  title: string; 
-  description: string; 
-  color: string; 
+}: {
+  title: string;
+  description: string;
+  color: string;
   icon: React.ReactNode;
   tabValue: string;
 }) {
-  const colorClasses = {
+  const colorClasses: Record<string, string> = {
     blue: 'from-blue-500 to-blue-600 border-blue-200 dark:border-blue-800 hover:shadow-blue-500/30',
     green: 'from-green-500 to-green-600 border-green-200 dark:border-green-800 hover:shadow-green-500/30',
     purple: 'from-purple-500 to-purple-600 border-purple-200 dark:border-purple-800 hover:shadow-purple-500/30',
     orange: 'from-orange-500 to-orange-600 border-orange-200 dark:border-orange-800 hover:shadow-orange-500/30',
-    pink: 'from-pink-500 to-pink-600 border-pink-200 dark:border-pink-800 hover:shadow-pink-500/30',
-    red: 'from-red-500 to-red-600 border-red-200 dark:border-red-800 hover:shadow-red-500/30',
-    indigo: 'from-indigo-500 to-indigo-600 border-indigo-200 dark:border-indigo-800 hover:shadow-indigo-500/30',
+    cyan: 'from-cyan-500 to-cyan-600 border-cyan-200 dark:border-cyan-800 hover:shadow-cyan-500/30',
+    indigo: 'from-indigo-500 to-indigo-600 border-indigo-200 dark:border-indigo-800 hover:shadow-indigo-500/30'
   };
 
+  const gradientClass = colorClasses[color]?.split(' ').slice(0, 2).join(' ') || '';
+  const borderClass = colorClasses[color]?.split(' ')[2] || '';
+  const shadowClass = colorClasses[color]?.split(' ')[3] || '';
+
   return (
-    <Card 
-      className={`border-2 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${colorClasses[color as keyof typeof colorClasses].split(' ')[2]} bg-white/90 dark:bg-gray-800/90 hover:${colorClasses[color as keyof typeof colorClasses].split(' ')[3]}`}
+    <Card
+      className={`border-2 hover:shadow-xl transition-all duration-300 hover:scale-105 cursor-pointer ${borderClass} bg-white/90 dark:bg-gray-800/90 hover:${shadowClass}`}
       onClick={() => {
-        // 触发父组件的状态更新
         const event = new CustomEvent('navigateToTab', { detail: tabValue });
         window.dispatchEvent(event);
       }}
     >
       <CardHeader>
-        <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${colorClasses[color as keyof typeof colorClasses].split(' ')[0]} ${colorClasses[color as keyof typeof colorClasses].split(' ')[1]} flex items-center justify-center text-white mb-4`}>
+        <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${gradientClass} flex items-center justify-center text-white mb-4`}>
           {icon}
         </div>
         <CardTitle className="text-lg">{title}</CardTitle>
         <CardDescription className="text-sm">{description}</CardDescription>
       </CardHeader>
+      <CardContent>
+        <Button
+          variant="ghost"
+          className="w-full group"
+          onClick={() => {
+            const event = new CustomEvent('navigateToTab', { detail: tabValue });
+            window.dispatchEvent(event);
+          }}
+        >
+          开始学习
+          <CheckCircle2 className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
+        </Button>
+      </CardContent>
     </Card>
   );
 }
