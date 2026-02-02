@@ -234,10 +234,10 @@ function CoordinateSystem() {
                 <Badge className="bg-green-500">{determineQuadrant()}</Badge>
               </div>
               <div className="text-sm text-gray-600 dark:text-gray-400 mt-2">
-                {pointX > 0 && <div>• x > 0，在 Y 轴右侧</div>}
-                {pointX < 0 && <div>• x < 0，在 Y 轴左侧</div>}
-                {pointY > 0 && <div>• y > 0，在 X 轴上方</div>}
-                {pointY < 0 && <div>• y < 0，在 X 轴下方</div>}
+                {pointX > 0 && <div>- x 大于 0，在 Y 轴右侧</div>}
+                {pointX < 0 && <div>- x 小于 0，在 Y 轴左侧</div>}
+                {pointY > 0 && <div>- y 大于 0，在 X 轴上方</div>}
+                {pointY < 0 && <div>- y 小于 0，在 X 轴下方</div>}
               </div>
             </div>
           </div>
@@ -463,11 +463,11 @@ function QuadrantSymmetry() {
           <div className="text-sm">
             <p className="font-medium mb-2">点的对称性</p>
             <ul className="list-disc list-inside space-y-1 text-gray-600 dark:text-gray-400">
-              <li>关于 X 轴对称：(x, y) → (x, -y)</li>
-              <li>关于 Y 轴对称：(x, y) → (-x, y)</li>
-              <li>关于原点对称：(x, y) → (-x, -y)</li>
-              <li>第一象限：x > 0, y > 0 | 第二象限：x < 0, y > 0</li>
-              <li>第三象限：x < 0, y < 0 | 第四象限：x > 0, y < 0</li>
+              <li>关于 X 轴对称：(x, y) 变为 (x, -y)</li>
+              <li>关于 Y 轴对称：(x, y) 变为 (-x, y)</li>
+              <li>关于原点对称：(x, y) 变为 (-x, -y)</li>
+              <li>第一象限：x 大于 0, y 大于 0 | 第二象限：x 小于 0, y 大于 0</li>
+              <li>第三象限：x 小于 0, y 小于 0 | 第四象限：x 大于 0, y 小于 0</li>
             </ul>
           </div>
         </div>
@@ -677,13 +677,13 @@ function CoordinatePractice() {
       question: "点 P(3, -2) 在哪个象限？",
       options: ["第一象限", "第二象限", "第三象限", "第四象限"],
       correctAnswer: 3,
-      explanation: "点 P(3, -2) 中，x = 3 > 0，y = -2 < 0，因此在第四象限。"
+      explanation: "点 P(3, -2) 中，x = 3 大于 0，y = -2 小于 0，因此在第四象限。"
     },
     {
       question: "点 P(-2, 5) 关于 X 轴对称的点的坐标是？",
       options: ["(2, -5)", "(-2, -5)", "(2, 5)", "(-2, 5)"],
       correctAnswer: 1,
-      explanation: "关于 X 轴对称，横坐标不变，纵坐标取相反数，因此 (-2, 5) → (-2, -5)。"
+      explanation: "关于 X 轴对称，横坐标不变，纵坐标取相反数，因此 (-2, 5) 变为 (-2, -5)。"
     },
     {
       question: "点 A(1, 3) 和 B(4, 7) 之间的距离是？",
@@ -699,9 +699,9 @@ function CoordinatePractice() {
     },
     {
       question: "若点 P(x, y) 在第二象限，则 x 和 y 的符号是？",
-      options: ["x > 0, y > 0", "x < 0, y > 0", "x < 0, y < 0", "x > 0, y < 0"],
+      options: ["x 大于 0, y 大于 0", "x 小于 0, y 大于 0", "x 小于 0, y 小于 0", "x 大于 0, y 小于 0"],
       correctAnswer: 1,
-      explanation: "第二象限的点满足 x < 0（在 Y 轴左侧），y > 0（在 X 轴上方）。"
+      explanation: "第二象限的点满足 x 小于 0（在 Y 轴左侧），y 大于 0（在 X 轴上方）。"
     }
   ];
 
